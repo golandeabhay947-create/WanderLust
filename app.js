@@ -115,10 +115,9 @@ app.use("/", userRoutes);
 // ============================
 // Home
 // ============================
-// app.get("/", (req, res) => {
-//   res.send("root is working");
-// });
-
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
 // ============================
 // Error Handling
 // ============================
