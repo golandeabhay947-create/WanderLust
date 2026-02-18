@@ -1,24 +1,53 @@
 <style>
     .instagram{
         color: rgb(214, 41, 128);
+        transition: transform 0.3s ease;
+
     }
+    .instagram:hover{
+        transform: scale(1.8);
+     }
+
     .whatsapp{
         color: rgb(76, 220, 76);
+        transition: transform 0.3s ease;
+
     }
+    .whatsapp:hover{
+        transform: scale(1.8);
+     }
+
+     .facebook{
+        transition: transform 0.3s ease;
+
+    }
+    .facebook:hover{
+        transform: scale(1.8);
+     }
+
+
+/* term and ploicy  */
+
+    .term_policy:hover{
+        color: blue;
+    }
+
+
 </style>
 
 
 <footer>
     <div class="f-info">
         <div class="f-info-socials">
-           <a href="https://www.facebook.com/"><i class="fa-brands fa-square-facebook"></i></a>
-            <a href="https://www.instagram.com/" class="instagram"><i class="fa-brands fa-square-instagram"></i></a>
-             <a href="https://web.whatsapp.com/" class="whatsapp"><i class="fa-brands fa-square-whatsapp"></i></a>
+           <a href="https://www.facebook.com/" class="facebook"><i class="fa-brands fa-square-facebook facebook"></i></a>
+            <a href="https://www.instagram.com/" class="instagram"><i class="fa-brands fa-square-instagram  instagram"></i></a>
+             <a href="https://web.whatsapp.com/" class="whatsapp"><i class="fa-brands fa-square-whatsapp whatsapp"></i></a>
         </div>
         <div><i class="fa-regular fa-copyright"></i>WanderLust private Limited</div>
         <div class="f-info-links">
-            <a href="/privacy">Privacy</a>
-            <a href="/terms">Terms</a>
+<a href="/terms" class="term_policy">Terms & Conditions</a>
+<a href="/privacy" class="term_policy">Privacy Policy</a>
+
         </div>
     </div>
 </footer>

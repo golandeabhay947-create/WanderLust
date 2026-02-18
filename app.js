@@ -118,6 +118,20 @@ app.use("/", userRoutes);
 app.get("/", (req, res) => {
   res.redirect("/listings");
 });
+
+// ============================
+// Legal Pages
+// ============================
+app.get("/terms", (req, res) => {
+  res.render("legal/term");
+});
+
+app.get("/privacy", (req, res) => {
+  res.render("legal/privacy");
+});
+
+
+
 // ============================
 // Error Handling
 // ============================
