@@ -42,20 +42,28 @@
         </div>
 
         <!-- Password -->
-        <div class="mb-3">
-          <label for="password" class="form-label fw-semibold">Password</label>
-          <input 
-            type="password" 
-            name="password"
-            id="password" 
-            class="form-control" 
-            placeholder="Enter your password"
-            minlength="6"
-            required
-          >
-          <div class="valid-feedback">Looks good!</div>
-          <div class="invalid-feedback">Password must be at least 6 characters.</div>
-        </div>
+       <div class="mb-3 position-relative">
+  <label for="password" class="form-label fw-semibold">Password</label>
+
+  <input 
+    type="password" 
+    name="password"
+    id="password" 
+    class="form-control pe-5" 
+    placeholder="Enter your password"
+    minlength="6"
+    required
+  >
+
+  <!-- Eye Icon -->
+  <i class="bi bi-eye-slash position-absolute"
+     id="togglePassword"
+     style="top: 38px; right: 15px; cursor: pointer;"></i>
+
+  <div class="valid-feedback">Looks good!</div>
+  <div class="invalid-feedback">Password must be at least 6 characters.</div>
+</div>
+
 
         <div class="d-grid">
           <button class="btn btn-primary">Sign Up</button>
