@@ -1,4 +1,5 @@
 const Listing = require("../models/listing");
+const User = require("../models/user");
 
 
 
@@ -121,4 +122,24 @@ module.exports.deleteListing = async (req,res) =>{
     req.flash("success"," Listing Deleted!");
 
   res.redirect("/listings");
+};
+
+
+module.exports.toggleFavourite = async (req, res) => {
+  let { id } = req.params;
+  let user = await User.findById(req.user._id);
+
+  if (user.favourites.some(fav => fav.equals(id))) {
+    user.favourites.pull(id);
+  } else {
+    user.favourites.push(id);
+  }
+
+  await user.save();
+  res.redirect(`/listings/${id}`);
+};
+
+module.exports.showFavourites = async (req, res) => {
+  const user = await User.findById(req.user._id).populate("favourites");
+  res.render("listings/favourites", { allListing: user.favourites });
 };

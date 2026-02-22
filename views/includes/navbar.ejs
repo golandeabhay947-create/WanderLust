@@ -157,13 +157,25 @@
           </li>
         <% } %>
 
-        <% if (currUser) { %>
-          <li class="nav-item">
-            <a class="nav-link user" href="/logout">
-              <i class="fa-solid fa-up-right-from-square"></i> Log Out
-            </a>
-          </li>
-        <% } %>
+       <% if (currUser) { %>
+
+<!-- Favourites -->
+<li class="nav-item">
+    <a class="nav-link user" href="/listings/favourites">
+        <i class="fa-solid fa-heart text-danger"></i> My Favourites
+    </a>
+</li>
+
+<!-- Logout -->
+<li class="nav-item">
+    <a class="nav-link user" href="/logout">
+        <i class="fa-solid fa-up-right-from-square"></i> Log Out
+    </a>
+</li>
+
+
+
+<% } %>
       </ul>
     </div>
   </div>

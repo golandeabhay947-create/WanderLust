@@ -97,11 +97,18 @@ passport.deserializeUser(User.deserializeUser());
 // ============================
 // res.locals (VERY IMPORTANT)
 // ============================
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
-  res.locals.currUser = req.user;
-   res.locals.q = req.query.q || "";
+  res.locals.q = req.query.q || "";
+
+  if (req.user) {
+    const user = await User.findById(req.user._id).populate("favourites");
+    res.locals.currUser = user;
+  } else {
+    res.locals.currUser = null;
+  }
+
   next();
 });
 

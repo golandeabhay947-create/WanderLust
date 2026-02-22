@@ -29,14 +29,19 @@ router
 // new route
 router.get("/new", isLoggedIn , listingController.renderNewForm);
 
+// favourit elisting
 
+router.get("/favourites", isLoggedIn, wrapAsync(listingController.showFavourites));
 
-
+router.post("/:id/favourite", isLoggedIn, wrapAsync(listingController.toggleFavourite));
 
 // edit route
 router.get("/:id/edit" ,isLoggedIn,
   isOwner,
   wrapAsync(listingController.editListing));
+
+
+
 
 //  show ,  update and delete
 
