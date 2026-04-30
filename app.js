@@ -19,6 +19,8 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 
+
+
 // Routes
 const listingRoutes = require("./routes/listing.js");
 const reviewRoutes = require("./routes/review.js");
@@ -118,7 +120,6 @@ app.use(async (req, res, next) => {
 app.use("/listings", listingRoutes);
 app.use("/listings/:id/reviews", reviewRoutes);
 app.use("/", userRoutes);
-
 // ============================
 // Home
 // ============================
