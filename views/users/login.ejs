@@ -1,53 +1,64 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
-<div class="row mt-5">
-  <div class="col-6 offset-3">
-
-    <div class="card shadow p-4">
-
-      <h2 class="mb-4 text-center">Welcome Back 👋</h2>
-      <p class="text-muted text-center mb-4">Login to continue your journey</p>
+<div class="row justify-content-center my-5">
+  <div class="col-12 col-sm-10 col-md-8 col-lg-5">
+    <div class="form-card">
+      <div class="text-center mb-4">
+        <div class="brand-logo justify-content-center mb-2 fs-3">
+          <i class="fa-solid fa-compass"></i>
+        </div>
+        <h3 class="fw-bold mb-1">Welcome back 👋</h3>
+        <p class="text-muted small">Log in to your WanderLust account to continue</p>
+      </div>
 
       <form action="/login" method="POST" class="needs-validation" novalidate>
-
         <!-- Username -->
         <div class="mb-3">
-          <label for="username" class="form-label fw-semibold">Username</label>
-          <input 
-            type="text" 
-            name="username" 
-            id="username"
-            class="form-control"
-            placeholder="Enter your username"
-            required
-          >
-          <div class="invalid-feedback">Username is required!</div>
+          <label for="username" class="form-label fw-semibold small text-muted">Username</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light border-end-0 rounded-start-3"><i class="fa-regular fa-user text-muted"></i></span>
+            <input 
+              type="text" 
+              name="username" 
+              id="username"
+              class="form-control form-control-custom rounded-end-3"
+              placeholder="Enter your username"
+              required
+              autofocus
+            >
+          </div>
+          <div class="invalid-feedback">Please enter your username.</div>
         </div>
 
         <!-- Password -->
-<div class="mb-3 position-relative">
-    <label for="password" class="form-label fw-semibold">Password</label>
-    <input type="password" name="password" id="password"
-        class="form-control pe-5" placeholder="Enter your password" required>
-    <!-- Eye Icon -->
-    <i class="bi bi-eye-slash position-absolute" id="togglePassword"
-        style="top: 38px; right: 15px; cursor: pointer;">
-    </i>
-    <div class="invalid-feedback">Password is required!</div>
-</div>
-
-        <div class="d-grid">
-          <button class="btn btn-primary">Login</button>
+        <div class="mb-4">
+          <label for="password" class="form-label fw-semibold small text-muted">Password</label>
+          <div class="input-group position-relative">
+            <span class="input-group-text bg-light border-end-0 rounded-start-3"><i class="fa-solid fa-lock text-muted"></i></span>
+            <input 
+              type="password" 
+              name="password" 
+              id="password"
+              class="form-control form-control-custom pe-5 rounded-end-3" 
+              placeholder="Enter your password" 
+              required
+            >
+            <i class="bi bi-eye-slash position-absolute text-muted" id="togglePassword"
+              style="top: 50%; right: 15px; transform: translateY(-50%); cursor: pointer; z-index: 5;">
+            </i>
+          </div>
+          <div class="invalid-feedback">Please enter your password.</div>
         </div>
 
-        <p class="text-center mt-3 mb-0">
-          Don’t have an account?
-          <a href="/signup" class="text-decoration-none">Sign Up</a>
+        <button type="submit" class="btn btn-primary-custom w-100 py-2 fs-6 mb-3">
+          Log In
+        </button>
+
+        <p class="text-center text-muted small mb-0">
+          Don’t have an account? 
+          <a href="/signup" class="fw-bold text-danger text-decoration-none">Sign Up</a>
         </p>
-
       </form>
-
     </div>
-
   </div>
 </div>

@@ -1,36 +1,27 @@
-<% layout("/layouts/boilerplate") %>
+<% layout("/layouts/boilerplate.ejs") %>
 
-<div class="container d-flex justify-content-center mt-5 mb-5">
-  <div class="card shadow-sm p-4" style="max-width: 750px; width: 100%; border-radius: 15px;">
+<div class="row justify-content-center my-4">
+  <div class="col-12 col-md-10 col-lg-8">
+    <div class="form-card">
+      <h2 class="fw-bold text-center mb-2">Privacy Policy</h2>
+      <p class="text-muted text-center small mb-4">
+        Last Updated: <%= new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) %>
+      </p>
 
-    <h2 class="text-center mb-2">Privacy Policy</h2>
-    <p class="text-muted text-center small mb-3">
-      Last Updated: <%= new Date().toDateString() %>
-    </p>
+      <hr class="mb-4">
 
-    <hr>
+      <div class="text-secondary small leading-relaxed" style="line-height: 1.8;">
+        <p><strong class="text-dark">1. Overview:</strong> WanderLust is committed to protecting your privacy. This policy explains how we collect, use, and safeguard your personal details.</p>
+        <p><strong class="text-dark">2. Data We Collect:</strong> We collect necessary account details (such as username, email address, and hashed authentication data), listing submissions, and reviews.</p>
+        <p><strong class="text-dark">3. Purpose of Processing:</strong> We use your data to maintain account authentication, present your favourite stays, display public property listings, and secure platform sessions.</p>
+        <p><strong class="text-dark">4. Security Measures:</strong> Passwords are cryptographically salted and hashed using industry standards (Passport Local Mongoose & pbkdf2). Sensitive tokens and sessions are protected.</p>
+        <p><strong class="text-dark">5. Cookies & Local Sessions:</strong> We utilize encrypted HTTP cookies to maintain login authentication and stateful sessions.</p>
+        <p><strong class="text-dark">6. Your Rights:</strong> You can edit or delete your listings, reviews, and account details at any time through your dashboard.</p>
+      </div>
 
-    <div class="small">
-
-      <p><strong>1. Introduction:</strong> WanderLust respects your privacy and explains how your data is collected and protected.</p>
-
-      <p><strong>2. Information Collected:</strong> We collect account details (username, email, encrypted password), listing data, reviews, and session information.</p>
-
-      <p><strong>3. Usage of Information:</strong> Data is used to manage accounts, display listings, improve user experience, and maintain security.</p>
-
-      <p><strong>4. Data Security:</strong> Passwords are encrypted and database access is restricted to authorized systems.</p>
-
-      <p><strong>5. Cookies & Sessions:</strong> We use cookies and sessions to maintain login state and improve performance.</p>
-
-      <p><strong>6. Third-Party Services:</strong> Hosting and database services may follow their own privacy policies.</p>
-
-      <p><strong>7. User Rights:</strong> Users can update or delete their information at any time.</p>
-
-      <p><strong>8. Policy Updates:</strong> Changes may be posted here with an updated date.</p>
-
-      <p><strong>9. Contact:</strong> For privacy concerns, contact us through the WanderLust platform.</p>
-
+      <div class="text-center mt-4 pt-3 border-top">
+        <a href="/listings" class="btn btn-primary-custom px-4 py-2">Back to Listings</a>
+      </div>
     </div>
-
   </div>
 </div>

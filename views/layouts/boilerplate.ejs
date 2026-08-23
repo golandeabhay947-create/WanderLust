@@ -3,99 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WanderLust</title>
+    <title>WanderLust - Discover Your Next Adventure</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Font Awesome 6.5.2 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Custom Rating CSS -->
+    <link rel="stylesheet" href="/css/rating.css">
+
+    <!-- Custom App CSS -->
     <link rel="stylesheet" href="/css/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-     rel="stylesheet" 
-     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
-     crossorigin="anonymous">
-     <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-       integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" 
-       crossorigin="anonymous" 
-       referrerpolicy="no-referrer" />
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-
-<link rel="stylesheet" href="/css/rating.css">
-
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
-<link rel="stylesheet" href="/css/starability-all.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
 </head>
 <body>
-    <%- include("../includes/navbar.ejs")  %> 
-    <div class="container">
-            <%- include("../includes/flash.ejs")  %> 
-        <%-body%></div>
+    <%- include("../includes/navbar.ejs") %> 
+    <main class="container container-main py-4">
+        <%- include("../includes/flash.ejs") %> 
+        <%- body %>
+    </main>
 
-    <%- include("../includes/footer.ejs")  %> 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
-    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
-    crossorigin="anonymous">
-    </script>
+    <%- include("../includes/footer.ejs") %> 
+
+    <!-- Bootstrap 5.3.3 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <!-- SweetAlert2 for Delete Confirmations -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Custom App Scripts -->
     <script src="/javascript/script.js"></script>
-
-
-
-
-
-
-<!-- for confirmation of delete review or listing -->
-
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-
-    const deleteForms = document.querySelectorAll(".delete-form");
-
-    deleteForms.forEach(form => {
-      form.addEventListener("submit", function(e) {
-        e.preventDefault();
-
-        Swal.fire({
-          title: 'Are you sure?',
-          text: "This action cannot be undone!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#d33',
-          cancelButtonColor: '#6c757d',
-          confirmButtonText: 'Yes, delete it!',
-          cancelButtonText: 'Cancel'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            form.submit();
-          }
-        });
-      });
-    });
-
-  });
-</script>
-
-
-
-
-<script>
-  const togglePassword = document.querySelector("#togglePassword");
-  const password = document.querySelector("#password");
-
-  togglePassword.addEventListener("click", function () {
-    const type = password.type === "password" ? "text" : "password";
-    password.type = type;
-
-    this.classList.toggle("bi-eye");
-    this.classList.toggle("bi-eye-slash");
-  });
-</script>
-
-
-
 </body>
 </html>
