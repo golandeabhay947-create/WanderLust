@@ -1,133 +1,159 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
-<div class="row justify-content-center my-3">
-  <div class="col-12 col-md-10 col-lg-8">
-    <div class="form-card">
-      <div class="mb-4">
-        <h3 class="fw-bold mb-1">Host a New Place 🏡</h3>
-        <p class="text-muted small">Fill in the details below to publish your property on WanderLust.</p>
-      </div>
-
-      <form action="/listings" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
-        <!-- Title -->
-        <div class="mb-3">
-          <label for="title" class="form-label fw-semibold">Property Title</label>
-          <input 
-            type="text" 
-            id="title" 
-            name="listing[title]" 
-            placeholder="e.g. Luxury Seaview Villa in Goa" 
-            class="form-control form-control-custom" 
-            required
-          >
-          <div class="invalid-feedback">Please provide a compelling property title.</div>
-        </div>
-
-        <!-- Description -->
-        <div class="mb-3">
-          <label for="description" class="form-label fw-semibold">Description</label>
-          <textarea 
-            id="description" 
-            name="listing[description]" 
-            rows="4" 
-            placeholder="Describe what makes your space special, views, amenities, and nearby attractions..." 
-            class="form-control form-control-custom" 
-            required
-          ></textarea>
-          <div class="invalid-feedback">Please enter a description for your listing.</div>
-        </div>
-
-        <!-- Category & Price Row -->
-        <div class="row g-3 mb-3">
-          <div class="col-md-6">
-            <label for="category" class="form-label fw-semibold">Category</label>
-            <select name="listing[category]" id="category" class="form-select form-select-custom" required>
-              <option value="">Select Property Category</option>
-              <option value="Trending" selected>Trending</option>
-              <option value="Rooms">Rooms</option>
-              <option value="Beach">Beach</option>
-              <option value="Mountains">Mountains</option>
-              <option value="Camping">Camping</option>
-              <option value="City">Iconic Cities</option>
-              <option value="Pool">Amazing Pools</option>
-              <option value="Nature">Nature</option>
-              <option value="Heritage">Heritage</option>
-              <option value="Islands">Islands</option>
-            </select>
-            <div class="invalid-feedback">Please select a category.</div>
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+      <div class="form-card host-form-card shadow-sm">
+        <!-- Form Header -->
+        <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom">
+          <div class="form-header-icon-box">
+            <i class="fa-solid fa-house-chimney text-danger"></i>
           </div>
+          <div>
+            <h4 class="fw-bold mb-1">Share Your Place</h4>
+            <p class="text-muted small mb-0">Provide details about your stay to publish your listing on WanderLust.</p>
+          </div>
+        </div>
 
-          <div class="col-md-6">
-            <label for="price" class="form-label fw-semibold">Price per Night (&#8377;)</label>
+        <form action="/listings" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
+          <!-- Property Title -->
+          <div class="mb-3">
+            <label for="title" class="form-label">Property title</label>
             <div class="input-group">
-              <span class="input-group-text bg-light border-end-0 rounded-start-3">&#8377;</span>
+              <span class="input-group-text bg-light border-end-0 rounded-start-2"><i class="fa-solid fa-heading"></i></span>
               <input 
-                type="number" 
-                id="price" 
-                name="listing[price]" 
-                placeholder="1200" 
-                min="0"
-                class="form-control form-control-custom rounded-end-3" 
+                type="text" 
+                id="title" 
+                name="listing[title]" 
+                placeholder="e.g. Modern Seaview Villa with Private Pool" 
+                class="form-control form-control-custom rounded-end-2" 
                 required
               >
             </div>
-            <div class="invalid-feedback">Please provide a valid price per night.</div>
+            <div class="invalid-feedback">Please provide a property title.</div>
           </div>
-        </div>
 
-        <!-- Location & Country Row -->
-        <div class="row g-3 mb-3">
-          <div class="col-md-6">
-            <label for="location" class="form-label fw-semibold">Location / City</label>
-            <input 
-              type="text" 
-              id="location" 
-              name="listing[location]" 
-              placeholder="e.g. Manali, Himachal Pradesh" 
+          <!-- Description -->
+          <div class="mb-3">
+            <label for="description" class="form-label">Description & highlights</label>
+            <textarea 
+              id="description" 
+              name="listing[description]" 
+              rows="4" 
+              placeholder="Describe what makes your space unique, scenic surroundings, amenities, and host rules..." 
               class="form-control form-control-custom" 
               required
-            >
-            <div class="invalid-feedback">Please provide a city or area location.</div>
+            ></textarea>
+            <div class="invalid-feedback">Please enter a description for your listing.</div>
           </div>
 
-          <div class="col-md-6">
-            <label for="country" class="form-label fw-semibold">Country</label>
-            <input 
-              type="text" 
-              id="country" 
-              name="listing[country]" 
-              placeholder="e.g. India" 
-              class="form-control form-control-custom" 
-              required
-            >
-            <div class="invalid-feedback">Please provide the country name.</div>
-          </div>
-        </div>
+          <!-- Category & Price Row -->
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label for="category" class="form-label">Category</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0 rounded-start-2"><i class="fa-solid fa-tag"></i></span>
+                <select name="listing[category]" id="category" class="form-select form-select-custom rounded-end-2" required>
+                  <option value="">Select category</option>
+                  <option value="Trending" selected>Trending</option>
+                  <option value="Rooms">Rooms</option>
+                  <option value="Beach">Beach</option>
+                  <option value="Mountains">Mountains</option>
+                  <option value="Camping">Camping</option>
+                  <option value="City">Iconic Cities</option>
+                  <option value="Pool">Amazing Pools</option>
+                  <option value="Nature">Nature</option>
+                  <option value="Heritage">Heritage</option>
+                  <option value="Islands">Islands</option>
+                </select>
+              </div>
+              <div class="invalid-feedback">Please select a category.</div>
+            </div>
 
-        <!-- Image Upload with Live Preview -->
-        <div class="mb-4">
-          <label for="image" class="form-label fw-semibold">Upload Property Cover Photo</label>
-          <input 
-            type="file" 
-            id="image" 
-            name="listing[image]" 
-            class="form-control form-control-custom"
-            accept="image/*"
-          >
-          <small class="text-muted d-block mt-1">Supports PNG, JPG, JPEG, WEBP formats.</small>
-          
-          <!-- Image preview container -->
-          <div class="mt-3">
-            <img id="imagePreview" src="#" alt="Selected Image Preview" class="img-fluid rounded-3 d-none" style="max-height: 220px; object-fit: cover;">
+            <div class="col-md-6">
+              <label for="price" class="form-label">Price per night (&#8377;)</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0 rounded-start-2 fw-bold">&#8377;</span>
+                <input 
+                  type="number" 
+                  id="price" 
+                  name="listing[price]" 
+                  placeholder="1500" 
+                  min="0"
+                  class="form-control form-control-custom rounded-end-2" 
+                  required
+                >
+              </div>
+              <div class="invalid-feedback">Please provide a valid price per night.</div>
+            </div>
           </div>
-        </div>
 
-        <!-- Submit Button -->
-        <div class="d-flex justify-content-end gap-2 pt-3 border-top">
-          <a href="/listings" class="btn btn-outline-secondary rounded-pill px-4">Cancel</a>
-          <button type="submit" class="btn btn-primary-custom px-4 py-2">Publish Listing</button>
-        </div>
-      </form>
+          <!-- Location & Country Row -->
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label for="location" class="form-label">City or location</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0 rounded-start-2"><i class="fa-solid fa-location-dot"></i></span>
+                <input 
+                  type="text" 
+                  id="location" 
+                  name="listing[location]" 
+                  placeholder="e.g. Calangute, Goa" 
+                  class="form-control form-control-custom rounded-end-2" 
+                  required
+                >
+              </div>
+              <div class="invalid-feedback">Please provide a city or location.</div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="country" class="form-label">Country</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0 rounded-start-2"><i class="fa-solid fa-earth-americas"></i></span>
+                <input 
+                  type="text" 
+                  id="country" 
+                  name="listing[country]" 
+                  placeholder="e.g. India" 
+                  class="form-control form-control-custom rounded-end-2" 
+                  required
+                >
+              </div>
+              <div class="invalid-feedback">Please provide the country name.</div>
+            </div>
+          </div>
+
+          <!-- Cover Image Upload -->
+          <div class="mb-4">
+            <label for="image" class="form-label">Property cover photo</label>
+            <div class="custom-file-upload-box">
+              <input 
+                type="file" 
+                id="image" 
+                name="listing[image]" 
+                class="form-control form-control-custom"
+                accept="image/*"
+              >
+              <small class="text-muted d-block mt-2">
+                <i class="fa-regular fa-image me-1"></i>Supports PNG, JPG, JPEG, and WEBP formats.
+              </small>
+            </div>
+            
+            <!-- Live Preview -->
+            <div class="mt-3">
+              <img id="imagePreview" src="#" alt="Selected Cover Preview" class="img-fluid rounded-3 shadow-sm d-none" style="max-height: 220px; width: 100%; object-fit: cover;">
+            </div>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="d-flex justify-content-end align-items-center gap-2 pt-3 border-top">
+            <a href="/listings" class="btn btn-outline-secondary rounded-pill px-3 py-2 small">Cancel</a>
+            <button type="submit" class="btn btn-primary-custom px-4 py-2">
+              <i class="fa-solid fa-cloud-arrow-up me-1"></i>Publish Listing
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>

@@ -1,17 +1,19 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
-<div class="row justify-content-center my-5">
-  <div class="col-12 col-md-8 col-lg-6">
-    <div class="empty-state-card shadow-sm border">
-      <div class="text-danger mb-3">
-        <i class="fa-solid fa-triangle-exclamation fs-1"></i>
-      </div>
-      <h3 class="fw-bold mb-2">Oops! Something went wrong</h3>
-      <p class="text-muted mb-4"><%= message || "We couldn't find the page you were looking for." %></p>
-      <div class="d-flex justify-content-center gap-2">
-        <a href="/listings" class="btn btn-primary-custom px-4 py-2">
-          <i class="fa-solid fa-house me-2"></i>Back to Home
-        </a>
+<div class="container py-5">
+  <div class="row justify-content-center my-4">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="empty-state-card shadow-sm border">
+        <div class="empty-state-icon-box text-danger mb-3">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <h3 class="fs-5 fw-bold mb-2">Oops! Something went wrong</h3>
+        <p class="text-muted mb-4"><%= message || "We couldn't find the page you were looking for." %></p>
+        <div class="d-flex justify-content-center gap-2">
+          <a href="/listings" class="btn btn-primary-custom px-4 py-2">
+            <i class="fa-solid fa-house me-2"></i>Back to Home
+          </a>
+        </div>
       </div>
     </div>
   </div>

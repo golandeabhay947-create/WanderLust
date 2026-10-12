@@ -1,29 +1,55 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
-<div class="container-fluid px-0">
+<div class="container py-4">
+  <!-- Breadcrumb Navigation -->
+  <nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb detail-breadcrumb mb-0">
+      <li class="breadcrumb-item"><a href="/listings"><i class="fa-solid fa-house me-1"></i>Explore</a></li>
+      <% if (listing.category) { %>
+        <li class="breadcrumb-item"><a href="/listings?category=<%= listing.category %>"><%= listing.category %></a></li>
+      <% } %>
+      <li class="breadcrumb-item active text-truncate" aria-current="page" style="max-width: 320px;"><%= listing.title %></li>
+    </ol>
+  </nav>
+
   <!-- Header: Title, Category & Actions -->
   <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-3">
     <div>
-      <div class="d-flex align-items-center gap-2 mb-1">
+      <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
         <% if (listing.category) { %>
-          <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-3 py-1 fw-bold">
-            <%= listing.category %>
+          <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-2 py-1 fw-bold small">
+            <i class="fa-solid fa-tag me-1"></i><%= listing.category %>
           </span>
         <% } %>
         <span class="text-muted small">
-          <i class="fa-solid fa-location-dot me-1"></i>
+          <i class="fa-solid fa-location-dot text-danger me-1"></i>
           <%= listing.location %><% if (listing.location && listing.country) { %>, <% } %><%= listing.country %>
         </span>
+        <% if (listing.reviews && listing.reviews.length > 0) { %>
+          <% 
+            const avgRating = (listing.reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / listing.reviews.length).toFixed(1);
+          %>
+          <span class="badge bg-warning bg-opacity-10 text-dark rounded-pill px-2 py-1 small fw-semibold">
+            <i class="fa-solid fa-star text-warning me-1"></i><%= avgRating %> (<%= listing.reviews.length %> <%= listing.reviews.length === 1 ? 'review' : 'reviews' %>)
+          </span>
+        <% } %>
       </div>
-      <h2 class="fw-bold mb-0"><%= listing.title %></h2>
+      <h3 class="fw-bold property-detail-title mb-0"><%= listing.title %></h3>
     </div>
 
     <!-- Favorite & Share Buttons -->
     <div class="d-flex align-items-center gap-2">
+      <!-- Share Button -->
+      <button type="button" class="btn btn-outline-secondary rounded-pill px-3 py-1.5 d-flex align-items-center gap-2 share-btn-trigger small" title="Share this stay">
+        <i class="fa-solid fa-arrow-up-from-bracket"></i>
+        <span class="small fw-semibold d-none d-sm-inline">Share</span>
+      </button>
+
+      <!-- Favorite Button -->
       <% if (currUser) { %>
         <form action="/listings/<%= listing._id %>/favourite" method="POST" class="d-inline">
-          <button type="submit" class="btn btn-outline-secondary rounded-pill px-3 py-2 d-flex align-items-center gap-2" title="Toggle Favourite">
-            <i class="bi <%= (currUser.favourites && currUser.favourites.some(fav => fav.equals(listing._id))) ? 'bi-heart-fill text-danger' : 'bi-heart' %> fs-6"></i>
+          <button type="submit" class="btn btn-outline-secondary rounded-pill px-3 py-1.5 d-flex align-items-center gap-2 small" title="Toggle Favourite">
+            <i class="bi <%= (currUser.favourites && currUser.favourites.some(fav => fav.equals(listing._id))) ? 'bi-heart-fill text-danger' : 'bi-heart' %>"></i>
             <span class="small fw-semibold">
               <%= (currUser.favourites && currUser.favourites.some(fav => fav.equals(listing._id))) ? 'Saved' : 'Save' %>
             </span>
@@ -33,69 +59,86 @@
     </div>
   </div>
 
-  <!-- Hero Image -->
-  <div class="show-hero-container mb-4">
+  <!-- Hero Image Showcase -->
+  <div class="show-hero-container mb-4 position-relative">
     <img 
       src="<%= (listing.image && listing.image.url) ? listing.image.url : 'https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?auto=format&fit=crop&w=1200&q=80' %>" 
       class="show-hero-image" 
       alt="<%= listing.title %>"
     >
+    <div class="hero-image-overlay-badge">
+      <i class="fa-solid fa-circle-check text-primary me-1"></i> Verified Stay
+    </div>
   </div>
 
   <!-- Main Content Grid: Left Details & Right Booking Card -->
-  <div class="row g-5">
+  <div class="row g-4 g-lg-5">
     <!-- Left Column: Details, Amenities, Host & Reviews -->
     <div class="col-lg-7 col-xl-8">
       <!-- Host Card -->
-      <div class="d-flex justify-content-between align-items-center pb-4 border-bottom">
-        <div>
-          <h5 class="fw-bold mb-1">
-            Entire stay hosted by <%= (listing.owner && listing.owner.username) ? listing.owner.username : 'WanderLust Host' %>
-          </h5>
-          <span class="text-muted small">Superhost · Dedicated Support · Verified Listing</span>
-        </div>
-        <div class="user-avatar-badge fs-5" style="width: 48px; height: 48px;">
-          <%= (listing.owner && listing.owner.username) ? listing.owner.username.charAt(0).toUpperCase() : 'H' %>
+      <div class="host-info-card d-flex justify-content-between align-items-center pb-3 border-bottom">
+        <div class="d-flex align-items-center gap-3">
+          <div class="host-avatar-box">
+            <%= (listing.owner && listing.owner.username) ? listing.owner.username.charAt(0).toUpperCase() : 'H' %>
+          </div>
+          <div>
+            <h6 class="fw-bold mb-1">
+              Entire stay hosted by <%= (listing.owner && listing.owner.username) ? listing.owner.username : 'WanderLust Host' %>
+            </h6>
+            <div class="d-flex align-items-center gap-2 text-muted small flex-wrap">
+              <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-2 py-0 fw-semibold" style="font-size: 0.72rem;">Superhost</span>
+              <span>·</span>
+              <span>Dedicated Support</span>
+              <span>·</span>
+              <span>Verified Listing</span>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- Key Highlights -->
-      <div class="py-4 border-bottom">
+      <div class="py-3 border-bottom">
         <div class="d-flex gap-3 mb-3">
-          <i class="fa-solid fa-door-open fs-4 text-danger mt-1"></i>
+          <div class="highlight-icon-box">
+            <i class="fa-solid fa-door-open text-danger"></i>
+          </div>
           <div>
-            <div class="fw-bold">Self check-in</div>
-            <div class="text-muted small">Check yourself in seamlessly upon arrival.</div>
+            <div class="fw-semibold small text-dark">Self check-in</div>
+            <div class="text-muted small">Check yourself in seamlessly upon arrival with digital door code.</div>
           </div>
         </div>
         <div class="d-flex gap-3 mb-3">
-          <i class="fa-solid fa-medal fs-4 text-danger mt-1"></i>
+          <div class="highlight-icon-box">
+            <i class="fa-solid fa-medal text-danger"></i>
+          </div>
           <div>
-            <div class="fw-bold">Experienced host</div>
+            <div class="fw-semibold small text-dark">Experienced host</div>
             <div class="text-muted small">100% of recent guests gave this host a 5-star rating.</div>
           </div>
         </div>
         <div class="d-flex gap-3">
-          <i class="fa-solid fa-calendar-check fs-4 text-danger mt-1"></i>
+          <div class="highlight-icon-box">
+            <i class="fa-solid fa-calendar-check text-danger"></i>
+          </div>
           <div>
-            <div class="fw-bold">Free cancellation</div>
+            <div class="fw-semibold small text-dark">Free cancellation</div>
             <div class="text-muted small">Cancel anytime up to 48 hours prior to check-in for a full refund.</div>
           </div>
         </div>
       </div>
 
       <!-- Description -->
-      <div class="py-4 border-bottom">
-        <h5 class="fw-bold mb-3">About this space</h5>
-        <p class="text-secondary leading-relaxed" style="white-space: pre-line; line-height: 1.7;">
+      <div class="py-3 border-bottom">
+        <h5 class="fw-bold section-subtitle">About this space</h5>
+        <div class="property-description text-secondary" style="white-space: pre-line;">
           <%= listing.description %>
-        </p>
+        </div>
       </div>
 
       <!-- What this place offers (Amenities) -->
-      <div class="py-4 border-bottom">
-        <h5 class="fw-bold mb-3">What this place offers</h5>
-        <div class="row row-cols-1 row-cols-sm-2 g-3">
+      <div class="py-3 border-bottom">
+        <h5 class="fw-bold section-subtitle">What this place offers</h5>
+        <div class="row row-cols-1 row-cols-sm-2 g-2 g-md-3">
           <div class="col">
             <div class="amenity-chip">
               <i class="fa-solid fa-wifi"></i>
@@ -137,13 +180,13 @@
 
       <!-- Owner Actions (Edit & Delete) -->
       <% if (currUser && listing.owner && currUser._id.equals(listing.owner._id)) { %>
-        <div class="py-4 border-bottom d-flex gap-3">
-          <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark rounded-pill px-4 py-2">
-            <i class="fa-solid fa-pen-to-square me-2"></i>Edit Listing
+        <div class="py-3 border-bottom d-flex gap-2 flex-wrap">
+          <a href="/listings/<%= listing._id %>/edit" class="btn btn-sm btn-dark rounded-pill px-3 py-1.5">
+            <i class="fa-solid fa-pen-to-square me-1"></i>Edit Listing
           </a>
           <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" class="delete-form">
-            <button class="btn btn-outline-danger rounded-pill px-4 py-2">
-              <i class="fa-solid fa-trash me-2"></i>Delete Listing
+            <button class="btn btn-sm btn-outline-danger rounded-pill px-3 py-1.5">
+              <i class="fa-solid fa-trash me-1"></i>Delete Listing
             </button>
           </form>
         </div>
@@ -151,9 +194,9 @@
 
       <!-- Reviews Section -->
       <div class="pt-4">
-        <div class="d-flex align-items-center gap-2 mb-4">
-          <i class="fa-solid fa-star text-warning fs-4"></i>
-          <h4 class="fw-bold mb-0">
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <i class="fa-solid fa-star text-warning fs-5"></i>
+          <h5 class="fw-bold mb-0">
             <% if (listing.reviews && listing.reviews.length > 0) { %>
               <% 
                 const avgRating = (listing.reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / listing.reviews.length).toFixed(1);
@@ -162,17 +205,18 @@
             <% } else { %>
               No reviews yet
             <% } %>
-          </h4>
+          </h5>
         </div>
 
         <!-- Add Review Form (If Logged In) -->
         <% if (currUser) { %>
-          <div class="form-card mb-5 p-4 rounded-4 shadow-sm border">
-            <h5 class="fw-bold mb-3">Leave a Review</h5>
+          <div class="form-card mb-4 p-3 p-md-4 rounded-3 shadow-sm border">
+            <h6 class="fw-bold mb-1">Leave a Review</h6>
+            <p class="text-muted small mb-3">Share your authentic experience to help other travelers</p>
             <form action="/listings/<%= listing._id %>/reviews" method="POST" class="needs-validation" novalidate>
               <!-- Star Rating -->
               <div class="mb-3">
-                <label class="form-label fw-semibold small text-muted mb-2">Overall Rating</label>
+                <label class="form-label mb-1">Overall rating</label>
                 <fieldset class="starability-slot">
                   <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
                   <input type="radio" id="first-rate1" name="review[rating]" value="1" />
@@ -190,27 +234,27 @@
 
               <!-- Comment -->
               <div class="mb-3">
-                <label for="comment" class="form-label fw-semibold small text-muted">Your Experience</label>
+                <label for="comment" class="form-label">Your experience</label>
                 <textarea 
                   name="review[comment]" 
                   id="comment" 
                   rows="3" 
                   class="form-control form-control-custom" 
-                  placeholder="What was memorable? How were the amenities and host?"
+                  placeholder="What was memorable? How were the amenities, cleanliness and host?"
                   required
                 ></textarea>
                 <div class="invalid-feedback">Please enter your feedback to submit.</div>
               </div>
 
-              <button type="submit" class="btn btn-primary-custom px-4 py-2">
+              <button type="submit" class="btn btn-sm btn-primary-custom px-4 py-2">
                 Submit Review
               </button>
             </form>
           </div>
         <% } else { %>
-          <div class="alert alert-light border rounded-4 p-3 mb-4 d-flex align-items-center justify-content-between">
-            <span class="text-muted"><i class="fa-solid fa-lock me-2"></i>Sign in to leave a rating and review for this stay.</span>
-            <a href="/login" class="btn btn-sm btn-outline-dark rounded-pill px-3">Log In</a>
+          <div class="alert alert-light border rounded-3 p-3 mb-4 d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <span class="text-muted small"><i class="fa-solid fa-lock me-2 text-danger"></i>Sign in to leave a rating and review for this stay.</span>
+            <a href="/login" class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1 small">Log In</a>
           </div>
         <% } %>
 
@@ -221,28 +265,28 @@
               <% if (!review) continue; %>
               <div class="col-12 col-md-6">
                 <div class="review-card h-100 d-flex flex-column">
-                  <div class="d-flex align-items-center gap-3 mb-3">
+                  <div class="d-flex align-items-center gap-2 mb-2">
                     <div class="review-author-avatar">
                       <%= (review.author && review.author.username) ? review.author.username.charAt(0).toUpperCase() : 'U' %>
                     </div>
                     <div>
-                      <div class="fw-bold mb-0">
+                      <div class="fw-semibold small text-dark mb-0">
                         <%= (review.author && review.author.username) ? review.author.username : 'Wanderer' %>
                       </div>
-                      <small class="text-muted">
+                      <small class="text-muted" style="font-size: 0.72rem;">
                         <%= review.createdAt ? new Date(review.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'Verified Guest' %>
                       </small>
                     </div>
                   </div>
 
                   <!-- Star Display -->
-                  <div class="text-warning small mb-2">
+                  <div class="text-warning small mb-2" style="font-size: 0.75rem;">
                     <% for(let i = 1; i <= 5; i++) { %>
                       <i class="bi <%= i <= review.rating ? 'bi-star-fill' : 'bi-star text-muted' %>"></i>
                     <% } %>
                   </div>
 
-                  <p class="text-secondary small mb-3 flex-grow-1">
+                  <p class="text-secondary small mb-3 flex-grow-1" style="line-height: 1.55;">
                     <%= review.comment %>
                   </p>
 
@@ -250,7 +294,7 @@
                   <% if (currUser && review.author && review.author._id.equals(currUser._id)) { %>
                     <div class="text-end mt-auto pt-2 border-top">
                       <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST" class="delete-form d-inline">
-                        <button type="submit" class="btn btn-link text-danger text-decoration-none p-0 small">
+                        <button type="submit" class="btn btn-link text-danger text-decoration-none p-0 small" style="font-size: 0.75rem;">
                           <i class="fa-solid fa-trash-can me-1"></i> Delete
                         </button>
                       </form>
@@ -266,56 +310,77 @@
 
     <!-- Right Column: Sticky Booking Widget -->
     <div class="col-lg-5 col-xl-4">
-      <div class="sticky-booking-card">
-        <div class="d-flex justify-content-between align-items-baseline mb-3">
+      <div class="sticky-booking-card shadow-sm">
+        <div class="booking-card-header d-flex justify-content-between align-items-baseline mb-3">
           <div>
-            <span class="fs-4 fw-bold">&#8377;<%= (listing.price || 0).toLocaleString("en-IN") %></span>
+            <span class="fs-4 fw-bold text-dark">&#8377;<%= (listing.price || 0).toLocaleString("en-IN") %></span>
             <span class="text-muted small"> / night</span>
           </div>
           <% if (listing.reviews && listing.reviews.length > 0) { %>
             <% 
               const avgRating = (listing.reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / listing.reviews.length).toFixed(1);
             %>
-            <div class="small fw-semibold">
+            <div class="badge bg-warning bg-opacity-10 text-dark rounded-pill px-2 py-1 small fw-bold">
               <i class="fa-solid fa-star text-warning me-1"></i><%= avgRating %>
             </div>
           <% } %>
         </div>
 
         <!-- Dates & Guests Box Mockup -->
-        <div class="border rounded-3 p-3 mb-3 bg-light">
+        <div class="booking-dates-box border rounded-2 p-2 mb-3 bg-light">
           <div class="row g-2 text-center">
             <div class="col-6 border-end">
-              <small class="text-muted d-block fw-bold" style="font-size: 0.72rem;">CHECK-IN</small>
-              <span class="fw-semibold small">Add Date</span>
+              <small class="text-muted d-block fw-bold" style="font-size: 0.65rem; letter-spacing: 0.4px;">CHECK-IN</small>
+              <span class="fw-semibold small text-dark"><i class="fa-regular fa-calendar me-1 text-danger"></i>Select Date</span>
             </div>
             <div class="col-6">
-              <small class="text-muted d-block fw-bold" style="font-size: 0.72rem;">CHECKOUT</small>
-              <span class="fw-semibold small">Add Date</span>
+              <small class="text-muted d-block fw-bold" style="font-size: 0.65rem; letter-spacing: 0.4px;">CHECKOUT</small>
+              <span class="fw-semibold small text-dark"><i class="fa-regular fa-calendar me-1 text-danger"></i>Select Date</span>
             </div>
+          </div>
+          <div class="border-top mt-2 pt-2 text-center">
+            <small class="text-muted d-block fw-bold" style="font-size: 0.65rem; letter-spacing: 0.4px;">GUESTS</small>
+            <span class="fw-semibold small text-dark"><i class="fa-solid fa-user-group me-1 text-primary"></i>2 Guests, 1 Room</span>
           </div>
         </div>
 
-        <button class="btn btn-primary-custom w-100 py-3 mb-3 fs-6" onclick="Swal.fire({ title: 'Reservation Request', text: 'Thank you for choosing <%= listing.title %>! Booking checkout feature is arriving soon.', icon: 'success', confirmButtonColor: '#fe424d' })">
-          Reserve Now
+        <!-- Reserve CTA Button -->
+        <button class="btn btn-primary-custom w-100 py-2 mb-2 fs-6 fw-bold" onclick="Swal.fire({ title: 'Reservation Request', text: 'Thank you for choosing <%= listing.title %>! Booking checkout feature is arriving soon.', icon: 'success', confirmButtonColor: '#fe424d' })">
+          <i class="fa-solid fa-bolt me-1"></i>Reserve Now
         </button>
 
-        <p class="text-center text-muted small mb-3">You won't be charged yet</p>
+        <p class="text-center text-muted small mb-3" style="font-size: 0.75rem;">You won't be charged yet · 100% Secure</p>
 
         <!-- Price Breakdown -->
-        <div class="border-top pt-3">
-          <div class="d-flex justify-content-between text-muted small mb-2">
+        <div class="price-breakdown-card border-top pt-2">
+          <div class="d-flex justify-content-between text-muted small mb-1.5" style="font-size: 0.82rem;">
             <span>&#8377;<%= (listing.price || 0).toLocaleString("en-IN") %> x 3 nights</span>
-            <span>&#8377;<%= ((listing.price || 0) * 3).toLocaleString("en-IN") %></span>
+            <span class="fw-semibold text-dark">&#8377;<%= ((listing.price || 0) * 3).toLocaleString("en-IN") %></span>
           </div>
-          <div class="d-flex justify-content-between text-muted small mb-2">
+          <div class="d-flex justify-content-between text-muted small mb-1.5" style="font-size: 0.82rem;">
             <span>GST & Service tax (18%)</span>
-            <span>&#8377;<%= Math.round((listing.price || 0) * 3 * 0.18).toLocaleString("en-IN") %></span>
+            <span class="fw-semibold text-dark">&#8377;<%= Math.round((listing.price || 0) * 3 * 0.18).toLocaleString("en-IN") %></span>
+          </div>
+          <div class="d-flex justify-content-between text-success small mb-1.5" style="font-size: 0.82rem;">
+            <span>Instant discount</span>
+            <span class="fw-semibold">Free Cancellation</span>
           </div>
           <hr class="my-2">
-          <div class="d-flex justify-content-between fw-bold fs-6 mt-2">
-            <span>Total before checkout</span>
-            <span>&#8377;<%= Math.round((listing.price || 0) * 3 * 1.18).toLocaleString("en-IN") %></span>
+          <div class="d-flex justify-content-between fw-bold fs-6 mt-1">
+            <span class="text-dark">Total before checkout</span>
+            <span class="text-danger">&#8377;<%= Math.round((listing.price || 0) * 3 * 1.18).toLocaleString("en-IN") %></span>
+          </div>
+        </div>
+
+        <!-- Trust Badges Under Booking Box -->
+        <div class="mt-3 pt-2 border-top">
+          <div class="d-flex align-items-center gap-2 text-muted small mb-1" style="font-size: 0.75rem;">
+            <i class="fa-solid fa-shield-halved text-success"></i>
+            <span>Verified Clean & Safe Property</span>
+          </div>
+          <div class="d-flex align-items-center gap-2 text-muted small" style="font-size: 0.75rem;">
+            <i class="fa-solid fa-headset text-primary"></i>
+            <span>24/7 Dedicated Support Assistance</span>
           </div>
         </div>
       </div>

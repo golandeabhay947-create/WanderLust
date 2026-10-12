@@ -1,4 +1,4 @@
-// WanderLust Frontend Scripts
+// WanderLust - MakeMyTrip-Inspired Frontend Scripts
 (() => {
   "use strict";
 
@@ -63,7 +63,7 @@
     });
   }
 
-  // 4. Safe Password Toggle
+  // 4. Safe Password Visibility Toggle
   const togglePassword = document.querySelector("#togglePassword");
   const passwordField = document.querySelector("#password");
   if (togglePassword && passwordField) {
@@ -108,12 +108,44 @@
     });
   });
 
-  // 6. Auto dismiss flash alerts after 5 seconds
+  // 6. Share Button Copy-to-Clipboard
+  const shareButtons = document.querySelectorAll(".share-btn-trigger");
+  shareButtons.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          if (typeof Swal !== "undefined") {
+            Swal.fire({
+              toast: true,
+              position: "top-end",
+              icon: "success",
+              title: "Link copied to clipboard!",
+              showConfirmButton: false,
+              timer: 2500,
+              timerProgressBar: true,
+            });
+          } else {
+            alert("Stay link copied to clipboard!");
+          }
+        }).catch(() => {
+          prompt("Copy this link to share:", window.location.href);
+        });
+      } else {
+        prompt("Copy this link to share:", window.location.href);
+      }
+    });
+  });
+
+  // 7. Auto dismiss flash alerts after 5 seconds
   const flashAlerts = document.querySelectorAll(".auto-dismiss-alert");
   flashAlerts.forEach((alert) => {
     setTimeout(() => {
-      const bsAlert = new bootstrap.Alert(alert);
-      bsAlert.close();
+      try {
+        const bsAlert = new bootstrap.Alert(alert);
+        bsAlert.close();
+      } catch (err) {
+        // Alert might already be closed
+      }
     }, 5000);
   });
-})(); 
+})();

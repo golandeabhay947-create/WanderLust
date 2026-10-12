@@ -1,27 +1,36 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
-<div class="row justify-content-center my-4">
-  <div class="col-12 col-md-10 col-lg-8">
-    <div class="form-card">
-      <h2 class="fw-bold text-center mb-2">Terms & Conditions</h2>
-      <p class="text-muted text-center small mb-4">
-        Last Updated: <%= new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) %>
-      </p>
+<div class="container py-4">
+  <div class="row justify-content-center my-3">
+    <div class="col-12 col-md-10 col-lg-8">
+      <div class="form-card">
+        <div class="text-center mb-4">
+          <div class="auth-brand-badge mb-3">
+            <i class="fa-solid fa-file-contract"></i>
+          </div>
+          <h2 class="fs-4 fw-bold mb-1">Terms & Conditions</h2>
+          <p class="text-muted small mb-0">
+            Last Updated: <%= new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) %>
+          </p>
+        </div>
 
-      <hr class="mb-4">
+        <hr class="mb-4">
 
-      <div class="text-secondary small leading-relaxed" style="line-height: 1.8;">
-        <p><strong class="text-dark">1. Acceptance of Terms:</strong> By accessing and using WanderLust, you agree to comply with and be bound by these terms.</p>
-        <p><strong class="text-dark">2. User Accounts:</strong> You must provide accurate, current, and complete registration information and maintain the security of your credentials.</p>
-        <p><strong class="text-dark">3. Property Listings:</strong> All property listings must be genuine, accurate, and comply with local regulations. WanderLust reserves the right to moderate or remove inappropriate listings.</p>
-        <p><strong class="text-dark">4. Reviews & Community:</strong> Reviews must represent authentic guest experiences. Offensive or misleading reviews are strictly prohibited.</p>
-        <p><strong class="text-dark">5. Prohibited Activities:</strong> Fraudulent activities, system abuse, and unauthorized scraping are strictly prohibited.</p>
-        <p><strong class="text-dark">6. Intellectual Property:</strong> All branding, design, and website assets remain the property of WanderLust.</p>
-        <p><strong class="text-dark">7. Limitation of Liability:</strong> WanderLust provides a platform for listing discovery and is not directly responsible for agreements between hosts and guests.</p>
-      </div>
+        <div class="text-secondary small leading-relaxed" style="line-height: 1.8;">
+          <p><strong class="text-dark">1. Acceptance of Terms:</strong> By accessing and using WanderLust, you agree to comply with and be bound by these terms.</p>
+          <p><strong class="text-dark">2. User Accounts:</strong> You must provide accurate, current, and complete registration information and maintain the security of your credentials.</p>
+          <p><strong class="text-dark">3. Property Listings:</strong> All property listings must be genuine, accurate, and comply with local regulations. WanderLust reserves the right to moderate or remove inappropriate listings.</p>
+          <p><strong class="text-dark">4. Reviews & Community:</strong> Reviews must represent authentic guest experiences. Offensive or misleading reviews are strictly prohibited.</p>
+          <p><strong class="text-dark">5. Prohibited Activities:</strong> Fraudulent activities, system abuse, and unauthorized scraping are strictly prohibited.</p>
+          <p><strong class="text-dark">6. Intellectual Property:</strong> All branding, design, and website assets remain the property of WanderLust.</p>
+          <p><strong class="text-dark">7. Limitation of Liability:</strong> WanderLust provides a platform for listing discovery and is not directly responsible for agreements between hosts and guests.</p>
+        </div>
 
-      <div class="text-center mt-4 pt-3 border-top">
-        <a href="/listings" class="btn btn-primary-custom px-4 py-2">Back to Listings</a>
+        <div class="text-center mt-4 pt-3 border-top">
+          <a href="/listings" class="btn btn-primary-custom px-4 py-2">
+            <i class="fa-solid fa-compass me-2"></i>Back to Listings
+          </a>
+        </div>
       </div>
     </div>
   </div>

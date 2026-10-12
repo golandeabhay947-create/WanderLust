@@ -27,8 +27,10 @@
 </head>
 <body>
     <%- include("../includes/navbar.ejs") %> 
-    <main class="container container-main py-4">
-        <%- include("../includes/flash.ejs") %> 
+    <main class="main-content-wrapper">
+        <div class="container flash-container">
+            <%- include("../includes/flash.ejs") %> 
+        </div>
         <%- body %>
     </main>
 

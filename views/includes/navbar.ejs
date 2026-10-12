@@ -1,61 +1,83 @@
 
 <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
-  <div class="container-fluid px-lg-4">
+  <div class="container px-3 px-lg-4">
     <!-- Brand Logo -->
-    <a class="brand-logo" href="/listings">
-      <i class="fa-solid fa-compass"></i>
-      <span>WanderLust</span>
+    <a class="brand-logo" href="/listings" aria-label="WanderLust Home">
+      <div class="brand-logo-icon">
+        <i class="fa-solid fa-compass"></i>
+      </div>
+      <div class="brand-text-group">
+        <span class="brand-name">WanderLust</span>
+        <span class="brand-tagline">STAYS & EXPERIENCES</span>
+      </div>
     </a>
 
     <!-- Navbar Toggler for Mobile -->
-    <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+    <button class="navbar-toggler border-0 shadow-none px-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
       aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
-      <i class="fa-solid fa-bars fs-4"></i>
+      <span class="navbar-toggler-icon-custom">
+        <i class="fa-solid fa-bars fs-5"></i>
+      </span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarMain">
-      <!-- Center: Search Bar -->
-      <div class="mx-auto my-2 my-lg-0 w-100 d-flex justify-content-center">
-        <form class="search-wrapper" action="/listings" method="GET">
+      <!-- Center: Quick Compact Search Bar (Visible on deeper pages or when scrolling) -->
+      <div class="mx-auto my-2 my-lg-0 navbar-search-container">
+        <form class="search-wrapper" action="/listings" method="GET" role="search">
+          <i class="fa-solid fa-magnifying-glass search-leading-icon"></i>
           <input 
             class="form-control search-input-pill" 
             type="search" 
             name="q"
-            placeholder="Search destinations, villas, price..." 
+            placeholder="Search city, villa, destination..." 
             value="<%= typeof q !== 'undefined' ? q : '' %>"
             autocomplete="off"
+            aria-label="Search destinations"
           >
           <button class="search-btn-circle" type="submit" aria-label="Search">
-            <i class="fa-solid fa-magnifying-glass fs-6"></i>
+            <i class="fa-solid fa-arrow-right"></i>
           </button>
         </form>
       </div>
 
       <!-- Right Side Actions -->
-      <ul class="navbar-nav align-items-lg-center gap-2 mb-2 mb-lg-0">
+      <ul class="navbar-nav align-items-lg-center gap-2 mb-2 mb-lg-0 ms-lg-auto">
+        <!-- Share Your Place CTA -->
         <li class="nav-item">
-          <a class="nav-pill-btn nav-host-btn" href="/listings/new">
-            <i class="fa-solid fa-plus text-danger"></i>
+          <a class="nav-host-btn" href="/listings/new">
+            <span class="host-icon-circle"><i class="fa-solid fa-plus"></i></span>
             <span>Share Your Place</span>
           </a>
         </li>
 
         <% if (!currUser) { %>
           <li class="nav-item">
-            <a class="nav-pill-btn" href="/signup">
+            <a class="nav-link-btn" href="/signup">
               <i class="fa-regular fa-user"></i>
               <span>Sign Up</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="btn btn-primary-custom py-2 px-3 fs-6" href="/login">
+            <a class="btn btn-mmt-login" href="/login">
+              <i class="fa-solid fa-arrow-right-to-bracket me-1"></i>
               <span>Log In</span>
             </a>
           </li>
         <% } else { %>
-          <!-- User Dropdown -->
+          <!-- Favourites Quick Link -->
+          <li class="nav-item d-none d-xl-block">
+            <a class="nav-link-btn" href="/listings/favourites" title="My Saved Favourites">
+              <i class="fa-solid fa-heart text-danger"></i>
+              <span>Favourites</span>
+              <% if (currUser.favourites && currUser.favourites.length) { %>
+                <span class="badge bg-danger rounded-pill px-2 py-1 ms-1"><%= currUser.favourites.length %></span>
+              <% } %>
+            </a>
+          </li>
+
+          <!-- User Profile Dropdown -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle nav-pill-btn border py-1 ps-2 pe-3 d-flex align-items-center gap-2" 
+            <a class="user-menu-pill dropdown-toggle" 
                href="#" 
                role="button" 
                data-bs-toggle="dropdown" 
@@ -63,13 +85,19 @@
               <div class="user-avatar-badge">
                 <%= currUser.username ? currUser.username.charAt(0).toUpperCase() : 'U' %>
               </div>
-              <span class="fw-semibold text-truncate" style="max-width: 110px;"><%= currUser.username %></span>
+              <div class="d-flex flex-column text-start me-1">
+                <span class="user-greeting">Hi,</span>
+                <span class="user-name text-truncate" style="max-width: 100px;"><%= currUser.username %></span>
+              </div>
             </a>
-            <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-4 mt-2 p-2" style="min-width: 210px;">
+            <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-4 mt-2 p-2 dropdown-menu-custom">
               <li>
-                <div class="px-3 py-2 border-bottom mb-1">
-                  <small class="text-muted d-block">Signed in as</small>
+                <div class="px-3 py-2 border-bottom mb-1 bg-light rounded-3">
+                  <small class="text-muted d-block" style="font-size: 0.72rem;">LOGGED IN AS</small>
                   <strong class="text-dark"><%= currUser.username %></strong>
+                  <% if (currUser.email) { %>
+                    <small class="text-muted d-block text-truncate" style="font-size: 0.75rem;"><%= currUser.email %></small>
+                  <% } %>
                 </div>
               </li>
               <li>
@@ -84,7 +112,7 @@
               <li>
                 <a class="dropdown-item rounded-3 py-2 d-flex align-items-center gap-2" href="/listings/new">
                   <i class="fa-solid fa-house-chimney text-primary"></i>
-                  <span>Create Listing</span>
+                  <span>Host a Place</span>
                 </a>
               </li>
               <li><hr class="dropdown-divider my-1"></li>

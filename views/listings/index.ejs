@@ -1,154 +1,339 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
-<!-- Category Filters & Tax Switch Bar -->
-<div class="filters-container mb-4">
-  <div class="category-scroll-wrapper">
-    <a href="/listings" class="filter-item <%= !category ? 'active' : '' %>">
-      <i class="fa-solid fa-border-all"></i>
-      <span>All</span>
-    </a>
-
-    <a href="/listings?category=Trending" class="filter-item <%= category === 'Trending' ? 'active' : '' %>">
-      <i class="fa-solid fa-fire"></i>
-      <span>Trending</span>
-    </a>
-
-    <a href="/listings?category=Rooms" class="filter-item <%= category === 'Rooms' ? 'active' : '' %>">
-      <i class="fa-solid fa-bed"></i>
-      <span>Rooms</span>
-    </a>
-
-    <a href="/listings?category=Beach" class="filter-item <%= category === 'Beach' ? 'active' : '' %>">
-      <i class="fa-solid fa-umbrella-beach"></i>
-      <span>Beach</span>
-    </a>
-
-    <a href="/listings?category=Mountains" class="filter-item <%= category === 'Mountains' ? 'active' : '' %>">
-      <i class="fa-solid fa-mountain"></i>
-      <span>Mountains</span>
-    </a>
-
-    <a href="/listings?category=Camping" class="filter-item <%= category === 'Camping' ? 'active' : '' %>">
-      <i class="fa-solid fa-campground"></i>
-      <span>Camping</span>
-    </a>
-
-    <a href="/listings?category=City" class="filter-item <%= category === 'City' ? 'active' : '' %>">
-      <i class="fa-solid fa-city"></i>
-      <span>Iconic Cities</span>
-    </a>
-
-    <a href="/listings?category=Pool" class="filter-item <%= category === 'Pool' ? 'active' : '' %>">
-      <i class="fa-solid fa-water-ladder"></i>
-      <span>Amazing Pools</span>
-    </a>
-
-    <a href="/listings?category=Nature" class="filter-item <%= category === 'Nature' ? 'active' : '' %>">
-      <i class="fa-solid fa-tree"></i>
-      <span>Nature</span>
-    </a>
-
-    <a href="/listings?category=Heritage" class="filter-item <%= category === 'Heritage' ? 'active' : '' %>">
-      <i class="fa-solid fa-landmark"></i>
-      <span>Heritage</span>
-    </a>
-
-    <a href="/listings?category=Islands" class="filter-item <%= category === 'Islands' ? 'active' : '' %>">
-      <i class="fa-solid fa-water"></i>
-      <span>Islands</span>
-    </a>
-  </div>
-
-  <!-- Tax Switch -->
-  <div class="tax-toggle-box">
-    <div class="form-check form-switch form-check-reverse m-0">
-      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-      <label class="form-check-label" for="flexSwitchCheckDefault">Display total after taxes</label>
+<!-- ==========================================
+     HERO SECTION & SEARCH INTERFACE (MakeMyTrip Inspired)
+     ========================================== -->
+<section class="hero-section">
+  <div class="hero-backdrop-pattern"></div>
+  <div class="container hero-content-container">
+    <div class="hero-text-header text-center">
+      <div class="hero-badge-pill">
+        <i class="fa-solid fa-compass me-1"></i>
+        <span>Discover Your Next Adventure</span>
+      </div>
+      <h1 class="hero-title">Book Unique Stays & Luxury Getaways</h1>
+      <p class="hero-subtitle">
+        Explore handpicked villas, boutique homestays, beachside cottages & mountain retreats across top destinations.
+      </p>
     </div>
-  </div>
-</div>
 
-<!-- Active Search / Filter Banner (if applied) -->
-<% if (category || (typeof searchQuery !== 'undefined' && searchQuery)) { %>
-  <div class="d-flex align-items-center justify-content-between mb-3 py-2 px-3 bg-light rounded-3">
-    <div class="small text-muted">
-      <% if (searchQuery) { %>
-        Search results for: <strong>"<%= searchQuery %>"</strong>
-      <% } %>
-      <% if (category) { %>
-        Filtered by: <span class="badge bg-danger rounded-pill"><%= category %></span>
-      <% } %>
-      (<%= allListing.length %> places found)
-    </div>
-    <a href="/listings" class="btn btn-sm btn-outline-secondary rounded-pill">
-      <i class="fa-solid fa-xmark me-1"></i> Clear Filters
-    </a>
-  </div>
-<% } %>
+    <!-- MakeMyTrip Style Floating Search & Category Panel -->
+    <div class="hero-search-card shadow-sm">
+      <!-- Category Tabs (MakeMyTrip Style Top Navigation) -->
+      <div class="search-category-tabs">
+        <a href="/listings" class="category-tab-item <%= !category ? 'active' : '' %>" data-cat="">
+          <i class="fa-solid fa-border-all"></i>
+          <span>All Stays</span>
+        </a>
 
-<!-- Listings Grid -->
-<% if (!allListing || allListing.length === 0) { %>
-  <div class="empty-state-card mt-4">
-    <i class="fa-solid fa-compass empty-state-icon"></i>
-    <h3 class="fw-bold mb-2">No Destinations Found</h3>
-    <p class="text-muted mb-4">We couldn't find any stays matching your criteria. Try adjusting your search or category.</p>
-    <a href="/listings" class="btn btn-primary-custom px-4 py-2">
-      <i class="fa-solid fa-rotate-left me-2"></i>View All Listings
-    </a>
-  </div>
-<% } else { %>
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
-    <% for(let listing of allListing) { %>
-      <div class="col">
-        <div class="listing-card">
-          <!-- Image Container -->
-          <div class="card-img-container">
-            <a href="/listings/<%= listing._id %>" class="listing-card-link">
-              <img 
-                src="<%= (listing.image && listing.image.url) ? listing.image.url : 'https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?auto=format&fit=crop&w=800&q=60' %>" 
-                class="listing-img" 
-                alt="<%= listing.title %>"
-                loading="lazy"
-              >
-            </a>
+        <a href="/listings?category=Trending" class="category-tab-item <%= category === 'Trending' ? 'active' : '' %>" data-cat="Trending">
+          <i class="fa-solid fa-fire"></i>
+          <span>Trending</span>
+        </a>
 
-            <!-- Category Badge -->
-            <% if (listing.category) { %>
-              <span class="card-category-badge"><%= listing.category %></span>
-            <% } %>
+        <a href="/listings?category=Rooms" class="category-tab-item <%= category === 'Rooms' ? 'active' : '' %>" data-cat="Rooms">
+          <i class="fa-solid fa-bed"></i>
+          <span>Rooms</span>
+        </a>
 
-            <!-- Favorite Heart Button -->
-            <% if (currUser) { %>
-              <form action="/listings/<%= listing._id %>/favourite" method="POST" class="d-inline">
-                <button type="submit" class="card-fav-btn <%= (currUser.favourites && currUser.favourites.some(fav => fav.equals(listing._id))) ? 'active' : '' %>" title="Save to favourites">
-                  <i class="bi <%= (currUser.favourites && currUser.favourites.some(fav => fav.equals(listing._id))) ? 'bi-heart-fill text-danger' : 'bi-heart' %>"></i>
-                </button>
-              </form>
-            <% } %>
+        <a href="/listings?category=Beach" class="category-tab-item <%= category === 'Beach' ? 'active' : '' %>" data-cat="Beach">
+          <i class="fa-solid fa-umbrella-beach"></i>
+          <span>Beach</span>
+        </a>
+
+        <a href="/listings?category=Mountains" class="category-tab-item <%= category === 'Mountains' ? 'active' : '' %>" data-cat="Mountains">
+          <i class="fa-solid fa-mountain"></i>
+          <span>Mountains</span>
+        </a>
+
+        <a href="/listings?category=Camping" class="category-tab-item <%= category === 'Camping' ? 'active' : '' %>" data-cat="Camping">
+          <i class="fa-solid fa-campground"></i>
+          <span>Camping</span>
+        </a>
+
+        <a href="/listings?category=City" class="category-tab-item <%= category === 'City' ? 'active' : '' %>" data-cat="City">
+          <i class="fa-solid fa-city"></i>
+          <span>Iconic Cities</span>
+        </a>
+
+        <a href="/listings?category=Pool" class="category-tab-item <%= category === 'Pool' ? 'active' : '' %>" data-cat="Pool">
+          <i class="fa-solid fa-water-ladder"></i>
+          <span>Amazing Pools</span>
+        </a>
+
+        <a href="/listings?category=Nature" class="category-tab-item <%= category === 'Nature' ? 'active' : '' %>" data-cat="Nature">
+          <i class="fa-solid fa-tree"></i>
+          <span>Nature</span>
+        </a>
+
+        <a href="/listings?category=Heritage" class="category-tab-item <%= category === 'Heritage' ? 'active' : '' %>" data-cat="Heritage">
+          <i class="fa-solid fa-landmark"></i>
+          <span>Heritage</span>
+        </a>
+
+        <a href="/listings?category=Islands" class="category-tab-item <%= category === 'Islands' ? 'active' : '' %>" data-cat="Islands">
+          <i class="fa-solid fa-water"></i>
+          <span>Islands</span>
+        </a>
+      </div>
+
+      <!-- Main Search Inputs Row -->
+      <form action="/listings" method="GET" class="search-fields-grid" id="mainHeroSearchForm">
+        <!-- Tile 1: Destination / Search Query -->
+        <div class="search-tile destination-tile">
+          <div class="search-tile-label">
+            <i class="fa-solid fa-location-dot text-danger me-1"></i>
+            <span>Where to go</span>
           </div>
+          <div class="search-input-wrap">
+            <input 
+              type="text" 
+              name="q" 
+              id="heroSearchInput"
+              class="hero-search-input" 
+              placeholder="City, destination or villa name..." 
+              value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>"
+              autocomplete="off"
+            >
+          </div>
+          <div class="search-tile-hint text-truncate">e.g. Goa, Manali, Mumbai, Villa, or max budget (e.g. 3000)</div>
+        </div>
 
-          <!-- Card Info Body -->
-          <a href="/listings/<%= listing._id %>" class="listing-card-link">
-            <div class="listing-card-body">
-              <div class="d-flex justify-content-between align-items-baseline">
-                <h6 class="listing-title mb-1" title="<%= listing.title %>"><%= listing.title %></h6>
-              </div>
-              <div class="listing-location">
-                <i class="fa-solid fa-location-dot me-1 text-muted"></i>
-                <%= listing.location ? listing.location : '' %><% if (listing.location && listing.country) { %>, <% } %><%= listing.country ? listing.country : '' %>
-              </div>
-              <div class="listing-price mt-1">
-                <span>&#8377;</span>
-                <span class="listing-price-value" data-base-price="<%= listing.price || 0 %>">
-                  <%= (listing.price || 0).toLocaleString("en-IN") %>
-                </span>
-                <span class="text-muted fw-normal small">/ night</span>
-                <span class="tax-info d-none">+18% GST</span>
-              </div>
-            </div>
-          </a>
+        <!-- Tile 2: Category Filter -->
+        <div class="search-tile category-tile">
+          <div class="search-tile-label">
+            <i class="fa-solid fa-compass text-primary me-1"></i>
+            <span>Property category</span>
+          </div>
+          <div class="search-input-wrap">
+            <select name="category" id="heroCategorySelect" class="hero-category-select">
+              <option value="" <%= !category ? 'selected' : '' %>>All Categories</option>
+              <option value="Trending" <%= category === 'Trending' ? 'selected' : '' %>>Trending Stays</option>
+              <option value="Rooms" <%= category === 'Rooms' ? 'selected' : '' %>>Cozy Rooms</option>
+              <option value="Beach" <%= category === 'Beach' ? 'selected' : '' %>>Beachfront</option>
+              <option value="Mountains" <%= category === 'Mountains' ? 'selected' : '' %>>Mountain Views</option>
+              <option value="Camping" <%= category === 'Camping' ? 'selected' : '' %>>Camping & Glamping</option>
+              <option value="City" <%= category === 'City' ? 'selected' : '' %>>Iconic Cities</option>
+              <option value="Pool" <%= category === 'Pool' ? 'selected' : '' %>>Amazing Pools</option>
+              <option value="Nature" <%= category === 'Nature' ? 'selected' : '' %>>Nature & Forests</option>
+              <option value="Heritage" <%= category === 'Heritage' ? 'selected' : '' %>>Heritage & Castles</option>
+              <option value="Islands" <%= category === 'Islands' ? 'selected' : '' %>>Tropical Islands</option>
+            </select>
+          </div>
+          <div class="search-tile-hint">Select stay type</div>
+        </div>
+
+        <!-- Tile 3: Search Action Button -->
+        <div class="search-action-tile">
+          <button type="submit" class="hero-search-submit-btn" aria-label="Search destinations">
+            <i class="fa-solid fa-magnifying-glass me-2"></i>
+            <span>Search</span>
+          </button>
+        </div>
+      </form>
+
+      <!-- Search Card Footer Bar -->
+      <div class="search-card-footer">
+        <!-- Tax Switch (Preserving exact ID and behavior) -->
+        <div class="tax-toggle-box">
+          <div class="form-check form-switch form-check-reverse m-0">
+            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+            <label class="form-check-label" for="flexSwitchCheckDefault">
+              Display total after taxes <span class="tax-subtext">(+18% GST)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Quick Trending Destination Tags -->
+        <div class="quick-destination-tags d-none d-md-flex align-items-center gap-2">
+          <span class="text-muted small fw-semibold">Popular:</span>
+          <a href="/listings?q=Goa" class="tag-pill">Goa</a>
+          <a href="/listings?q=Manali" class="tag-pill">Manali</a>
+          <a href="/listings?category=Beach" class="tag-pill">Beach Villas</a>
+          <a href="/listings?category=Mountains" class="tag-pill">Hills & Mountains</a>
         </div>
       </div>
-    <% } %>
+    </div>
   </div>
-<% } %>
+</section>
+
+<!-- ==========================================
+     MAIN CONTENT CONTAINER
+     ========================================== -->
+<div class="container py-4">
+  <!-- Active Filter / Search Banner (if applied) -->
+  <% if (category || (typeof searchQuery !== 'undefined' && searchQuery)) { %>
+    <div class="active-filter-alert mb-4">
+      <div class="d-flex align-items-center gap-2 flex-wrap">
+        <i class="fa-solid fa-sliders text-danger"></i>
+        <div class="small text-dark fw-medium">
+          <% if (searchQuery) { %>
+            Search results for: <span class="badge bg-light text-dark border px-2 py-1">"<%= searchQuery %>"</span>
+          <% } %>
+          <% if (category) { %>
+            <% if (searchQuery) { %> · <% } %>
+            Category: <span class="badge bg-danger rounded-pill px-2 py-1"><%= category %></span>
+          <% } %>
+          <span class="text-muted ms-1">(<%= allListing.length %> places found)</span>
+        </div>
+      </div>
+      <a href="/listings" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1">
+        <i class="fa-solid fa-xmark me-1"></i> Clear Filters
+      </a>
+    </div>
+  <% } %>
+
+  <!-- Discovery Value / Trust Badges (MakeMyTrip Style) -->
+  <div class="features-trust-strip mb-4">
+    <div class="row g-2 g-md-3">
+      <div class="col-6 col-lg-3">
+        <div class="trust-feature-card">
+          <div class="feature-icon-box bg-primary-subtle text-primary">
+            <i class="fa-solid fa-shield-heart"></i>
+          </div>
+          <div>
+            <h6 class="fw-bold mb-0">100% Verified Stays</h6>
+            <small class="text-muted">Handpicked & inspected properties</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="trust-feature-card">
+          <div class="feature-icon-box bg-success-subtle text-success">
+            <i class="fa-solid fa-hand-holding-dollar"></i>
+          </div>
+          <div>
+            <h6 class="fw-bold mb-0">Transparent Pricing</h6>
+            <small class="text-muted">No hidden charges, live GST view</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="trust-feature-card">
+          <div class="feature-icon-box bg-warning-subtle text-warning">
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <div>
+            <h6 class="fw-bold mb-0">Superhost Stays</h6>
+            <small class="text-muted">Top-rated hosts & verified reviews</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="trust-feature-card">
+          <div class="feature-icon-box bg-info-subtle text-info">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <div>
+            <h6 class="fw-bold mb-0">Instant Discovery</h6>
+            <small class="text-muted">Fast search & reservation inquiry</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Listings Section Header -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+      <h4 class="fw-bold mb-1 section-heading">
+        <% if (category) { %>
+          <%= category %> Escapes & Stays
+        <% } else if (typeof searchQuery !== 'undefined' && searchQuery) { %>
+          Matching Accommodations
+        <% } else { %>
+          Featured Destinations & Stays
+        <% } %>
+      </h4>
+      <p class="text-muted small mb-0">Handpicked accommodations verified for comfort, style and memorable experiences</p>
+    </div>
+    <span class="badge bg-light text-secondary border rounded-pill px-3 py-1 fw-semibold d-none d-sm-inline-block small">
+      <%= allListing.length %> <%= allListing.length === 1 ? 'Stay' : 'Stays' %> Available
+    </span>
+  </div>
+
+  <!-- Listings Grid -->
+  <% if (!allListing || allListing.length === 0) { %>
+    <div class="empty-state-card my-4 shadow-sm">
+      <div class="empty-state-icon-box">
+        <i class="fa-solid fa-compass"></i>
+      </div>
+      <h4 class="fw-bold mb-2">No Destinations Found</h4>
+      <p class="text-muted small mb-4">We couldn't find any stays matching your criteria. Try adjusting your search term or exploring another category.</p>
+      <div class="d-flex justify-content-center gap-2">
+        <a href="/listings" class="btn btn-primary-custom px-4 py-2">
+          <i class="fa-solid fa-rotate-left me-2"></i>View All Listings
+        </a>
+      </div>
+    </div>
+  <% } else { %>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-3 g-md-4 listings-grid">
+      <% for(let listing of allListing) { %>
+        <div class="col">
+          <div class="listing-card">
+            <!-- Image Container -->
+            <div class="card-img-container">
+              <a href="/listings/<%= listing._id %>" class="listing-card-link" aria-label="<%= listing.title %>">
+                <img 
+                  src="<%= (listing.image && listing.image.url) ? listing.image.url : 'https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?auto=format&fit=crop&w=800&q=60' %>" 
+                  class="listing-img" 
+                  alt="<%= listing.title %>"
+                  loading="lazy"
+                >
+              </a>
+
+              <!-- Category Badge -->
+              <% if (listing.category) { %>
+                <span class="card-category-badge">
+                  <i class="fa-solid fa-tag me-1"></i><%= listing.category %>
+                </span>
+              <% } %>
+
+              <!-- Favorite Heart Button -->
+              <% if (currUser) { %>
+                <form action="/listings/<%= listing._id %>/favourite" method="POST" class="d-inline">
+                  <button type="submit" class="card-fav-btn <%= (currUser.favourites && currUser.favourites.some(fav => fav.equals(listing._id))) ? 'active' : '' %>" title="Save to favourites" aria-label="Toggle favourite">
+                    <i class="bi <%= (currUser.favourites && currUser.favourites.some(fav => fav.equals(listing._id))) ? 'bi-heart-fill text-danger' : 'bi-heart' %>"></i>
+                  </button>
+                </form>
+              <% } %>
+            </div>
+
+            <!-- Card Info Body -->
+            <a href="/listings/<%= listing._id %>" class="listing-card-link">
+              <div class="listing-card-body">
+                <div class="d-flex justify-content-between align-items-start mb-1">
+                  <h6 class="listing-title mb-0" title="<%= listing.title %>"><%= listing.title %></h6>
+                  <div class="listing-rating-pill">
+                    <i class="fa-solid fa-star text-warning me-1"></i>
+                    <span>4.9</span>
+                  </div>
+                </div>
+
+                <div class="listing-location">
+                  <i class="fa-solid fa-location-dot me-1 text-muted"></i>
+                  <%= listing.location ? listing.location : '' %><% if (listing.location && listing.country) { %>, <% } %><%= listing.country ? listing.country : '' %>
+                </div>
+
+                <div class="listing-perk-badge">
+                  <i class="fa-solid fa-check text-success"></i>Free cancellation
+                </div>
+
+                <div class="listing-price-container">
+                  <div class="d-flex align-items-baseline gap-1">
+                    <span class="price-currency">&#8377;</span>
+                    <span class="listing-price-value" data-base-price="<%= listing.price || 0 %>">
+                      <%= (listing.price || 0).toLocaleString("en-IN") %>
+                    </span>
+                    <span class="text-muted fw-normal small">/ night</span>
+                  </div>
+                  <span class="tax-info d-none">+18% GST</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  <% } %>
+</div>
